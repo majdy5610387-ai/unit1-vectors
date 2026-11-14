@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مراجعة الوحدة الأولى: المتجهات والهندسة الفراغية - أ. مجدي أبو عبد الله</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0F5257;
+            --primary-dark: #0B3C3F;
+            --secondary: #C88A2E;
+            --bg-color: #F4F7F6;
+            --card-bg: #FFFFFF;
+            --text-main: #2D3748;
+            --text-light: #718096;
+            --error-box: #6D28D9;
+            --error-bg: #F5F3FF;
+            --success: #2E8B57;
+            --danger: #DC2626;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
+        body { background-color: var(--bg-color); color: var(--text-main); line-height: 1.6; padding-bottom: 50px; }
+        .math, h1, h2, h3, .formula, .option-btn { font-family: 'Amiri', serif; }
+        header { background: linear-gradient(135deg, var(--primary-dark), var(--primary)); color: white; padding: 25px 15px; text-align: center; border-bottom: 5px solid var(--secondary); }
+        header h1 { font-size: 1.9rem; margin-bottom: 5px; }
+        .teacher-badge { display: inline-block; background-color: var(--secondary); color: #fff; padding: 4px 15px; border-radius: 20px; font-size: 0.9rem; margin-top: 10px; font-weight: 600; }
+        .exam-alert { background-color: #FFFBEB; border: 2px dashed var(--secondary); color: #92400E; text-align: center; padding: 12px; margin: 15px auto; max-width: 800px; border-radius: 12px; font-weight: 700; font-size: 1.05rem; }
+        .container { max-width: 800px; margin: 0 auto; padding: 0 15px; }
+        .nav-tabs { display: flex; justify-content: center; gap: 8px; margin: 20px 0; flex-wrap: wrap; }
+        .tab-btn { background-color: white; color: var(--primary); border: 2px solid var(--primary); padding: 10px 18px; border-radius: 30px; cursor: pointer; font-weight: 700; font-size: 0.95rem; transition: all 0.3s; }
+        .tab-btn.active, .tab-btn:hover { background-color: var(--primary); color: white; }
+        .section-content { display: none; }
+        .section-content.active { display: block; }
+        .card { background: var(--card-bg); border-radius: 14px; padding: 20px; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-right: 5px solid var(--primary); }
+        .card h3 { color: var(--primary); font-size: 1.4rem; margin-bottom: 12px; border-bottom: 2px solid #EDF2F7; padding-bottom: 8px; }
+        .formula-box { background-color: #F0FDF4; border: 1px solid #BBF7D0; padding: 12px 15px; border-radius: 10px; margin: 10px 0; font-size: 1.2rem; color: #166534; text-align: center; font-weight: bold; }
+        .math-root { direction: rtl; unicode-bidi: plaintext; display: inline-block; font-family: 'Amiri', serif; font-weight: bold; }
+        .common-mistake { background-color: var(--error-bg); border: 2px solid var(--error-box); border-radius: 10px; padding: 12px 15px; margin-top: 15px; }
+        .common-mistake h4 { color: var(--error-box); font-size: 1.05rem; margin-bottom: 5px; }
+        .common-mistake p { color: #4C1D95; font-size: 0.95rem; }
+        .quiz-card { background: white; border-radius: 14px; padding: 20px; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid #E2E8F0; }
+        .question-title { font-size: 1.2rem; font-weight: 700; color: var(--text-main); margin-bottom: 15px; }
+        .options-grid { display: grid; grid-template-columns: 1fr; gap: 10px; margin-bottom: 15px; }
+        .option-btn { background-color: #F8FAFC; border: 2px solid #E2E8F0; padding: 12px 15px; border-radius: 10px; text-align: right; font-size: 1.1rem; cursor: pointer; color: var(--text-main); transition: 0.2s; }
+        .option-btn:hover:not(:disabled) { background-color: #EDF2F7; border-color: var(--primary); }
+        .option-btn.correct { background-color: #DEF7EC !important; border-color: var(--success) !important; color: #03543F !important; font-weight: bold; }
+        .option-btn.wrong { background-color: #FFD8D8 !important; border-color: var(--danger) !important; color: #9B1C1C !important; }
+        .explanation { background-color: #EFF6FF; border-right: 4px solid #3B82F6; padding: 12px; border-radius: 8px; margin-top: 10px; font-size: 0.95rem; color: #1E40AF; display: none; }
+        .action-btn { background-color: var(--secondary); color: white; border: none; padding: 12px 25px; border-radius: 30px; font-size: 1.1rem; font-weight: bold; cursor: pointer; display: block; margin: 25px auto; }
+        .result-box { background: white; border-radius: 16px; padding: 30px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.1); display: none; }
+        .result-score { font-size: 2.5rem; color: var(--primary); font-weight: 900; margin: 15px 0; }
+        .whatsapp-share-btn { background-color: #25D366; color: white; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; padding: 12px 25px; border-radius: 30px; font-weight: bold; margin-top: 15px; }
+        footer { text-align: center; margin-top: 40px; color: var(--text-light); font-size: 0.9rem; border-top: 1px solid #E2E8F0; padding-top: 20px; }
+        @media (min-width: 600px) { .options-grid { grid-template-columns: 1fr 1fr; } }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>مراجعة الوحدة الأولى: المتجهات والهندسة الفراغية</h1>
+        <p>الصف الحادي عشر العلمي والصناعي - المنهاج الفلسطيني</p>
+        <div class="teacher-badge">إعداد وتصميم الأستاذ: مجدي أبو عبد الله</div>
+    </header>
+
+    <div class="exam-alert">
+        <span>⏰ موعد الامتحان النهائي للوحدة: الخميس القادم 19/11/2026</span>
+    </div>
+
+    <div class="container">
+        <div class="nav-tabs">
+            <button class="tab-btn active" onclick="switchTab('cheat-sheet')">بطاقات الشرح السريعة</button>
+            <button class="tab-btn" onclick="switchTab('practice')">بنك التدريب الشامل</button>
+            <button class="tab-btn" onclick="switchTab('exam')">الاختبار التجريبي ليوم الخميس</button>
+        </div>
+
+        <!-- بطاقات الشرح -->
+        <div id="cheat-sheet" class="section-content active">
+            <div class="card">
+                <h3>١-١ الإحداثيات الديكارتية في الفراغ ثلاثي الأبعاد</h3>
+                <p><strong>الفكرة الأساسية:</strong> تحديد نقطة في الفراغ بثلاثة إحداثيات (س، ص، ع)، مع مراعاة الأثمان الثمانية وإشاراتها.</p>
+                <div class="formula-box">المسافة بين نقطتين: أب = <span class="math-root">√(<sup>٢</sup>(س<sub>٢</sub> - س<sub>١</sub>) + <sup>٢</sup>(ص<sub>٢</sub> - ص<sub>١</sub>) + <sup>٢</sup>(ع<sub>٢</sub> - ع<sub>١</sub>))</span></div>
+                <div class="formula-box">إحداثيات نقطة المنتصف م = ((س<sub>١</sub> + س<sub>٢</sub>)/٢ ، (ص<sub>١</sub> + ص<sub>٢</sub>)/٢ ، (ع<sub>١</sub> + ع<sub>٢</sub>)/٢)</div>
+                <div class="common-mistake">
+                    <h4>⚠️ خطأ شائع (تنبيه أ. مجدي):</h4>
+                    <p>بعد النقطة (٣، -٤، ١٢) عن المستوى (س ص) هو القيمة المطلقة للإحداثي الغائب |ع| = ١٢ (وليس سالباً).</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>١-٢ المتجهات في المستوى</h3>
+                <div class="formula-box">طول المتجه م = (س، ص) هو: |م| = <span class="math-root">√(<sup>٢</sup>س + <sup>٢</sup>ص)</span></div>
+                <div class="formula-box">زاوية الميل مع اتجاه سينات الموجب: ظا هـ = ص / س (مع مراعاة الربع).</div>
+            </div>
+
+            <div class="card">
+                <h3>١-٣ العمليات على المتجهات</h3>
+                <div class="formula-box">متجه الوحدة باتجاه م: م̂ = م / |م|</div>
+            </div>
+
+            <div class="card">
+                <h3>١-٤ ضرب المتجهات (الضرب القياسي/الداخلي)</h3>
+                <div class="formula-box">أ . ب = |أ| |ب| جتا هـ = أ<sub>١</sub>ب<sub>١</sub> + أ<sub>٢</sub>ب<sub>٢</sub> + أ<sub>٣</sub>ب<sub>٣</sub></div>
+                <div class="formula-box">شرط التعامد: أ ⊥ ب ⟺ أ . ب = ٠</div>
+            </div>
+        </div>
+
+        <!-- بنك التدريب الشامل -->
+        <div id="practice" class="section-content">
+            <h2 style="color: var(--primary); margin-bottom: 15px; text-align: center;">بنك تدريبات أ. مجدي الشاملة (متعددة الأفكار)</h2>
+            <div id="practice-container"></div>
+        </div>
+
+        <!-- الاختبار التجريبي -->
+        <div id="exam" class="section-content">
+            <div style="background: white; padding: 20px; border-radius: 14px; text-align: center;">
+                <h2 style="color: var(--primary); margin-bottom: 10px;">نموذج اختبار محاكي ليوم الخميس</h2>
+                <p style="color: var(--text-light); margin-bottom: 20px;">هذا النموذج يغطي كافة أفكار الدروس الأربعة بأسئلة امتحانية دقيقة.</p>
+                <button class="action-btn" onclick="startExam()">ابدأ الاختبار التجريبي الآن</button>
+            </div>
+            <div id="exam-container" style="display: none; margin-top: 20px;"></div>
+            <div id="exam-result" class="result-box">
+                <h3>نتيجة الاختبار التجريبي</h3>
+                <div class="result-score" id="score-display">٠ / ١٢</div>
+                <p id="feedback-text" style="font-size: 1.1rem; margin-bottom: 15px;"></p>
+                <a id="whatsapp-btn" class="whatsapp-share-btn" href="#" target="_blank">إرسال النتيجة للأستاذ مجدي عبر الواتساب 📱</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>جميع حقوق المراجعة محفوظة للأستاذ المميز: مجدي أبو عبد الله | الحادي عشر علمي ٢٠٢٦</p>
+    </footer>
+
+    <script>
+        function switchTab(tabId) {
+            document.querySelectorAll('.section-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+
+        const practiceQuestions = [
+            {
+                q: "١) ما بعد النقطة (٤، ٣، ٢) عن المستوى (س ع)؟",
+                options: ["أ) ٤", "ب) ٣", "ج) ٢", "د) ١"],
+                correct: 1,
+                hint: "تنبيه أ. مجدي: البعد عن مستوى هو القيمة المطلقة للإحداثي الغائب (الغائب هنا هو ص، وإحداثيه ٣)."
+            },
+            {
+                q: "٢) إذا كانت م منتصف القطعة أب حيث أ(٢، ٣، ٥)، م(٤، ١، -١)، فما إحداثيات ب؟",
+                options: ["أ) (٦، -١، -٧)", "ب) (٣، ٢، ٢)", "ج) (٨، ٢، -٢)", "د) (١، -٢، -٦)"],
+                correct: 0,
+                hint: "الطرف المجهول = ٢ × المنتصف - الطرف المعلوم: س = ٢(٤) - ٢ = ٦، وص = ٢(١) - ٣ = -١، وع = ٢(-١) - ٥ = -٧."
+            },
+            {
+                q: "٣) قياس الزاوية التي يصنعها المتجه م = (٢، -٢) مع الاتجاه الموجب لمحور السينات يساوي:",
+                options: ["أ) ٤٥°", "ب) ١٣٥°", "ج) ٢٢٥°", "د) ٣١٥°"],
+                correct: 3,
+                hint: "ظا هـ = |-٢| / ٢ = ١ (الزاوية الحادة ٤٥°). بما أن المتجه في الربع الرابع (+، -)، إذن هـ = ٣٦٠° - ٤٥° = ٣١٥°."
+            },
+            {
+                q: "٤) قيمة م الموجبة التي تجعل المتجهين أ = (م، ٣)، ب = (م + ١، -٤) متعامدين هي:",
+                options: ["أ) ٢", "ب) ٣", "ج) ٤", "د) ٦"],
+                correct: 1,
+                hint: "التعامد يقتضي أن الضرب القياسي يساوي صفراً: م(م + ١) + (٣)(-٤) = ٠ ⟹ م² + م - ١٢ = ٠ ⟹ (م + ٤)(م - ٣) = ٠، وبما أن م موجبة إذن م = ٣."
+            },
+            {
+                q: "٥) طول المتجه -٥ و₁ + ١٢ و₂ يساوي:",
+                options: ["أ) ٧", "ب) ١٣", "ج) ١٧", "د) ١١٩"],
+                correct: 1,
+                hint: "الطول = جذر((-٥)² + ١٢²) = جذر(٢٥ + ١٤٤) = جذر ١٦٩ = ١٣ وحدات."
+            },
+            {
+                q: "٦) إذا كان أ = (١، ٤، ٢)، ب = (-١، ١، ٢)، فإن الضرب القياسي أ . ب يساوي:",
+                options: ["أ) ٧", "ب) ٩", "ج) ١١", "د) ٥"],
+                correct: 0,
+                hint: "أ . ب = (١×-١) + (٤×١) + (٢×٢) = -١ + ٤ + ٤ = ٧."
+            }
+        ];
+
+        const examQuestions = [
+            { q: "س١: النقطة التي تقع في المستوى (ص ع) من بين النقاط الآتية هي:", options: ["أ) (٠، -٥، ٣)", "ب) (٢، ٠، ٠)", "ج) (٠، ٠، -٤)", "د) (١، ٢، ٣)"], correct: 0, hint: "إحداثيها السيني صفراً." },
+            { q: "س٢: المسافة بين النقطتين (١، ٠، ٢) و (٣، ٢، -١) تساوي:", options: ["أ) ٣", "ب) جذر ١٧", "ج) ٩", "د) ٥"], correct: 1, hint: "تطبيق قانون المسافة المباشر." },
+            { q: "س٣: طول المتجه -٥ و₁ + ١٢ و₂ يساوي:", options: ["أ) ٧", "ب) ١٣", "ج) ١٧", "د) ١١٩"], correct: 1, hint: "جذر مجموع مربعي المركبتين." },
+            { q: "س٤: إذا كان أ = (٢، -١، ٢)، ب = (١، ٤، ٢)، فإن أ . ب يساوي:", options: ["أ) ٢", "ب) ٨", "ج) ١٢", "د) -٤"], correct: 0, hint: "أ . ب = ٢(١) + -١(٤) + ٢(٢) = ٢." },
+            { q: "س٥: متجه وحدة باتجاه المتجه (٣، -٤) هو:", options: ["أ) (٣/٥، -٤/٥)", "ب) (-٣/٥، ٤/٥)", "ج) (٣، -٤)", "د) (-٣، ٤)"], correct: 0, hint: "المتجه مقسوماً على طوله (٥)." },
+            { q: "س٦: إذا كان المتجهان (ك، ٦) و(٢، ٣) متوازيين، فإن قيمة ك تساوي:", options: ["أ) ٢", "ب) ٤", "ج) -٢", "د) ٨"], correct: 1, hint: "تناسب المركبات: ك/٢ = ٦/٣." }
+        ];
+
+        function loadPractice() {
+            const container = document.getElementById('practice-container');
+            container.innerHTML = '';
+            practiceQuestions.forEach((item, index) => {
+                let html = `<div class="quiz-card"><div class="question-title">${item.q}</div><div class="options-grid">`;
+                item.options.forEach((opt, optIdx) => {
+                    html += `<button class="option-btn" onclick="checkPractice(this, ${optIdx}, ${item.correct}, ${index})">${opt}</button>`;
+                });
+                html += `</div><div class="explanation" id="exp-${index}">💡 <strong>توضيح أ. مجدي:</strong> ${item.hint}</div></div>`;
+                container.innerHTML += html;
+            });
+        }
+
+        function checkPractice(btn, selected, correct, qIndex) {
+            const parent = btn.parentElement;
+            const buttons = parent.querySelectorAll('.option-btn');
+            buttons.forEach(b => b.disabled = true);
+            if (selected === correct) btn.classList.add('correct');
+            else { btn.classList.add('wrong'); buttons[correct].classList.add('correct'); }
+            document.getElementById(`exp-${qIndex}`).style.display = 'block';
+        }
+
+        function startExam() {
+            document.querySelector('#exam > div').style.display = 'none';
+            const container = document.getElementById('exam-container');
+            container.style.display = 'block';
+            container.innerHTML = '';
+            examQuestions.forEach((item, index) => {
+                let html = `<div class="quiz-card" id="exam-q-${index}"><div class="question-title">${item.q}</div><div class="options-grid">`;
+                item.options.forEach((opt, optIdx) => {
+                    html += `<button class="option-btn" onclick="selectExamOption(${index}, ${optIdx})">${opt}</button>`;
+                });
+                html += `</div></div>`;
+                container.innerHTML += html;
+            });
+            container.innerHTML += `<button class="action-btn" onclick="submitExam()">إنهاء وإرسال الاختبار</button>`;
+        }
+
+        let userAnswers = {};
+        function selectExamOption(qIdx, optIdx) {
+            userAnswers[qIdx] = optIdx;
+            const card = document.getElementById(`exam-q-${qIdx}`);
+            const buttons = card.querySelectorAll('.option-btn');
+            buttons.forEach((b, idx) => {
+                b.style.borderColor = idx === optIdx ? 'var(--primary)' : '#E2E8F0';
+                b.style.backgroundColor = idx === optIdx ? '#E6FFFA' : '#F8FAFC';
+            });
+        }
+
+        function submitExam() {
+            let score = 0;
+            examQuestions.forEach((item, index) => { if (userAnswers[index] === item.correct) score++; });
+            document.getElementById('exam-container').style.display = 'none';
+            const resultBox = document.getElementById('exam-result');
+            resultBox.style.display = 'block';
+            document.getElementById('score-display').innerText = `${score} / ${examQuestions.length}`;
+            document.getElementById('feedback-text').innerText = score >= 5 ? "ممتاز جداً! أنت جاهز تماماً لاختبار يوم الخميس." : "تحتاج إلى مراجعة بعض القوانين، ادرس بطاقات الشرح جيداً!";
+        }
+
+        window.onload = loadPractice;
+    </script>
+</body>
+</html>
